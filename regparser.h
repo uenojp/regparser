@@ -4,4 +4,5 @@
 
 #include "dict.h"
 #include "parser.h"
+#include "rule.h"
 #include "type.h"

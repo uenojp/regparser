@@ -10,7 +10,7 @@
 
 typedef struct {
     dict_t* dict;
-    bool rules[NUM_RULES][NUM_RULES];
+    bool rules[NUM_POS][NUM_POS];
 } parser_t;
 
 /* パーザーの初期化 */

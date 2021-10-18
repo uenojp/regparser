@@ -7,8 +7,10 @@ int parser_init(parser_t** p, const char* dict_path, const char* rules_path) {
         return 1;
     }
 
-    dict_load(&((*p)->dict), dict_path);
-    // load_rules(p->rules, rules_path);
+    if (dict_load(&((*p)->dict), dict_path) != 0)
+        return 1;
+    if (rule_load((*p)->rules, rules_path) != 0)
+        return 1;
 
     return 0;
 }
@@ -53,6 +55,25 @@ void parser_free(parser_t* p) {
     free(p);
 }
 
+/* 現在の状態 state と単語 word を受け取り、遷移先を返す
+   (state, word) -> state */
+PartOfSpeech transit(parser_t* p, PartOfSpeech state, char* word) {
+    if (strcmp(word, ".") == 0) {
+        return END;
+    }
+
+    PartOfSpeech pos = get_part_of_speech(p->dict, word);
+    if (pos == UNKNOWN) {
+        fprintf(stderr, "%s is not resisterd in dictionary\n", word);
+        return UNKNOWN;
+    }
+
+    if (p->rules[state][pos])
+        return pos;
+    else
+        return UNKNOWN;
+}
+
 /* strが文であるか確認する
    ここで "文 \in [A-Za-z ]+\. */
 bool is_sentence(const char* str) {
@@ -77,91 +98,4 @@ bool is_sentence(const char* str) {
     }
 
     return true;
-}
-
-/* 現在の状態 state と単語 word を受け取り、遷移先を返す
-   (state, word) -> state */
-PartOfSpeech transit(parser_t* p, PartOfSpeech state, char* word) {
-    if (strcmp(word, ".") == 0) {
-        return END;
-    }
-
-    PartOfSpeech pos = get_part_of_speech(p->dict, word);
-    if (pos == UNKNOWN) {
-        fprintf(stderr, "%s is not resisterd in dictionary\n", word);
-        return UNKNOWN;
-    }
-
-    switch (state) {
-        case START:
-            switch (pos) {
-                case DET:
-                case NOUN:
-                    return pos;
-                default:
-                    fprintf(stderr, "no such transition\n");
-                    return UNKNOWN;
-            }
-        case DET:
-            switch (pos) {
-                case NOUN:
-                case ADJ:
-                    return pos;
-                default:
-                    fprintf(stderr, "no such transition\n");
-                    return UNKNOWN;
-            }
-        case NOUN:
-            switch (pos) {
-                case PREP:
-                case VERB:
-                case ADV:
-                    return pos;
-                default:
-                    fprintf(stderr, "no such transition\n");
-                    return UNKNOWN;
-            }
-        case ADJ:
-            switch (pos) {
-                case NOUN:
-                    return NOUN;
-                default:
-                    fprintf(stderr, "no such transition\n");
-                    return UNKNOWN;
-            }
-        case PREP:
-            switch (pos) {
-                case NOUN:
-                case ADJ:
-                case DET:
-                    return pos;
-                default:
-                    fprintf(stderr, "no such transition\n");
-                    return UNKNOWN;
-            }
-        case ADV:
-            switch (pos) {
-                case PREP:
-                case NOUN:
-                    return pos;
-                default:
-                    fprintf(stderr, "no such transition\n");
-                    return UNKNOWN;
-            }
-        case VERB:
-            switch (pos) {
-                case DET:
-                case ADV:
-                    return pos;
-                default:
-                    fprintf(stderr, "no such transition\n");
-                    return UNKNOWN;
-            }
-        case END:
-            fprintf(stderr, "up to 1 sentence\n");
-            return UNKNOWN;
-        default:
-            fprintf(stderr, "unreachable case\n");
-            return UNKNOWN;
-    }
 }

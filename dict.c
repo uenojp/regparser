@@ -20,7 +20,7 @@ int dict_load(dict_t** dict, const char* path) {
         return 1;
     }
 
-    char pos_str[POS_SIZE];
+    char pos_str[POS_LEN];
     PartOfSpeech pos;
 
     /* ハッシュテーブル:

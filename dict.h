@@ -11,18 +11,12 @@
 #endif
 #include <search.h>
 
+#include "rule.h"
 #include "type.h"
 
 #ifndef NUM_WORDS_IN_DICT
 #define NUM_WORDS_IN_DICT 128
 #endif
-
-#ifndef NUM_RULES
-#define NUM_RULES 128
-#endif
-
-#define WORD_SIZE 128
-#define POS_SIZE 16
 
 typedef struct {
     struct hsearch_data* htab;                /* 単語と品詞を保持するハッシュテーブル */

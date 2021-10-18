@@ -18,6 +18,9 @@ typedef struct {
     PartOfSpeech pos;
 } WordPos;
 
+#define WORD_SIZE 128
+#define POS_LEN 16
+#define NUM_POS 9
 
 char* to_string(PartOfSpeech pos);
 
