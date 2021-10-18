@@ -1,16 +1,12 @@
-#include <stdio.h>
-#include <string.h>
-
-#include "type.h"
-#include "parser.h"
+#include "regparser.h"
 
 int main() {
-    PartOfSpeech state = START;
-    char* sentence[] = {"the", "child", "runs", "quickly", "to", "large", "house", "."};
-    for (int i = 0; i < 7; i++) {
-        state = transit(state, sentence[i]);
-        printf("%-9s   %s\n", sentence[i], to_string(state));
-    }
+    const char sentence[] = "the child runs quickly to large house.";
+
+    parser_t* parser;
+    parser_init(&parser, "dictionary", "rules");
+    parser_parse(parser, sentence);
+    parser_free(parser);
 
     return 0;
 }
