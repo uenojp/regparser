@@ -8,7 +8,7 @@ int rule_load(bool rules[NUM_POS][NUM_POS], const char* path) {
 
     FILE* file = fopen(path, "r");
     if (file == NULL) {
-        perror("rule_load: fopen: ");
+        perror("rule_load: fopen");
         return 1;
     }
 

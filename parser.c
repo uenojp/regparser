@@ -3,7 +3,7 @@
 int parser_init(parser_t** p, const char* dict_path, const char* rules_path) {
     *p = malloc(sizeof(parser_t));
     if (*p == NULL) {
-        perror("parser_init: malloc: ");
+        perror("parser_init: malloc");
         return 1;
     }
 
@@ -22,7 +22,7 @@ int parser_parse(parser_t* p, const char* sentence) {
     /* +1+1 は\0とスペース挿入用 */
     char* copy = (char*)malloc((strlen(sentence) + 1 + 1) * sizeof(char));
     if (copy == NULL) {
-        perror("parser_perse: malloc:");
+        perror("parser_perse: malloc");
         return 1;
     }
     strcpy(copy, sentence);

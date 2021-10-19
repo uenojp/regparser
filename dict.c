@@ -3,20 +3,20 @@
 int dict_load(dict_t** dict, const char* path) {
     *dict = malloc(sizeof(dict_t));
     if (*dict == NULL) {
-        perror("dict_load: malloc: ");
+        perror("dict_load: malloc");
         return 1;
     }
 
     (*dict)->htab = malloc(sizeof(struct hsearch_data));
     if ((*dict)->htab == NULL) {
-        perror("dict_load: malloc: ");
+        perror("dict_load: malloc");
         return 1;
     }
     memset((*dict)->htab, 0, sizeof(*((*dict)->htab)));
 
     FILE* file = fopen(path, "r");
     if (file == NULL) {
-        perror("dict_load: fopen: ");
+        perror("dict_load: fopen");
         return 1;
     }
 
@@ -52,7 +52,7 @@ int dict_load(dict_t** dict, const char* path) {
 
         /* entryに格納したkey, valueをハッシュテーブルに登録 */
         if (hsearch_r(entry, ENTER, &found_, (*dict)->htab) == 0) {
-            perror("dict_load: hsearch_r: ");
+            perror("dict_load: hsearch_r");
             fclose(file);
             return 1;
         }
