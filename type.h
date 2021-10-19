@@ -18,7 +18,7 @@ typedef struct {
     PartOfSpeech pos;
 } WordPos;
 
-#define WORD_SIZE 128
+#define WORD_LEN 128
 #define POS_LEN 16
 #define NUM_POS 9
 
