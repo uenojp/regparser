@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 
+#include "dict.h"
 #include "type.h"
 
 #ifndef NUM_RULES
@@ -10,6 +11,8 @@
 #endif
 
 /* pathから品詞の規則をロードする */
-int rule_load(bool rules[NUM_POS][NUM_POS], const char* path);
+int load_rule(const char* path);
+
+bool has_rule(const PartOfSpeech state, const PartOfSpeech pos);
 
 #endif

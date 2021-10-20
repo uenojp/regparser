@@ -1,15 +1,14 @@
 #include "test.h"
 
 int main() {
-    bool rules[NUM_POS][NUM_POS] = {0};
-    rule_load(rules, "rules");
+    load_rule("./asset/rules");
 
-    assert(rules[START][DET] == true);
-    assert(rules[START][NOUN] == true);
-    assert(rules[NOUN][NOUN] == false);
-    assert(rules[ADJ][ADJ] == false);
-    assert(rules[ADJ][VERB] == false);
-    assert(rules[VERB][ADV] == true);
+    assert(has_rule(START, DET) == true);
+    assert(has_rule(START, NOUN) == true);
+    assert(has_rule(NOUN, NOUN) == false);
+    assert(has_rule(ADJ, ADJ) == false);
+    assert(has_rule(ADJ, VERB) == false);
+    assert(has_rule(VERB, ADV) == true);
 
     return 0;
 }
