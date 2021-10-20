@@ -24,9 +24,8 @@ int load_rule(const char* path) {
 }
 
 bool has_rule(const PartOfSpeech state, const PartOfSpeech pos) {
-    if (!loaded) {
-        fprintf(stderr, "haven't loaded rules\n");
+    if (!loaded)
         return false;
-    }
+
     return rules[state][pos];
 }

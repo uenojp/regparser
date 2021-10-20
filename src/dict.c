@@ -26,16 +26,11 @@ int load_dict(const char* path) {
     ENTRY entry;                  /* key, valueの登録に使用 */
     ENTRY* found_;                /* keyの検索に使用、dict_load()では登録の際、引数に渡すのみで使わない */
 
-    int nscan;
-    while ((nscan = fscanf(file, "%128s %16s\n", words_pool_tail, pos_str)) != EOF) {
-        if (nscan != 2) {
-            fprintf(stderr, "load_dict: incorrectly formatted input\n");
-            return 1;
-        }
-
+    while (fscanf(file, "%128s %16s\n", words_pool_tail, pos_str) != EOF) {
         pos = to_enum(pos_str);
         if (pos == UNKNOWN) {
-            fprintf(stderr, "load_dict: cannot identify part of speech of %s\n", words_pool_tail);
+            fprintf(stderr, "%s in %s is an invalid part of speech\n", words_pool_tail, path);
+            fclose(file);
             return 1;
         }
 
@@ -52,7 +47,7 @@ int load_dict(const char* path) {
     }
 
     if (fclose(file) != 0) {
-        fprintf(stderr, "load_dict: fclose\n");
+        perror("load_dict: fclose");
         return 1;
     }
 
@@ -62,10 +57,8 @@ int load_dict(const char* path) {
 }
 
 PartOfSpeech get_part_of_speech(const char* word) {
-    if (!loaded) {
-        fprintf(stderr, "haven't loaded dictionary\n");
+    if (!loaded)
         return UNKNOWN;
-    }
 
     ENTRY entry;
     ENTRY* found;

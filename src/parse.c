@@ -73,12 +73,12 @@ bool is_sentence(const char* str) {
     for (size_t i = 0; i < len; i++) {
         /* アルファベット、スペース、ピリオドから構成されていないとき、strを文として認めない */
         if (!(isalpha(str[i]) || strchr(" .", str[i]))) {
-            fprintf(stderr, "parse: contains non-alphabetic charactor\n");
+            fprintf(stderr, "invalid sentence that contains non-alphabetic characters.\n");
             return false;
         }
         /* ピリオドを丁度1つだけ含み、それが文末にあるとき以外は、strを文として認めない */
         if (str[i] == '.' && i != len - 1) {
-            fprintf(stderr, "parse: up to 1 sentence\n");
+            fprintf(stderr, "up to 1 sentence\n");
             return false;
         }
     }
