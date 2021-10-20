@@ -26,22 +26,19 @@ int parse(const char* sentence) {
 
     PartOfSpeech pos = START;
 
-    char* token = strtok(copy, " ");
-    pos = transit(pos, token);
-    if (pos == UNKNOWN) {
-        fprintf(stderr, "invalid rule applied to %s\n", token);
-        free(copy);
-        return 1;
-    }
-    printf("(%s, %s)\n", token, to_string(pos));
-    while ((token = strtok(NULL, " ")) != NULL) {
+    char* token;
+    bool first = true; /* strtokには初回のみポインタを渡す */
+    printf("%-7s %-7s\n", "", "START");
+    while ((token = strtok(first ? copy : NULL, " ")) != NULL) {
+        first = false;
+
         pos = transit(pos, token);
         if (pos == UNKNOWN) {
             fprintf(stderr, "invalid rule applied to %s\n", token);
             free(copy);
             return 1;
         }
-        printf("(%s, %s)\n", token, to_string(pos));
+        printf("%-7s %-7s\n", token, to_string(pos));
     }
 
     free(copy);
