@@ -6,7 +6,7 @@
 #define __USE_GNU
 #include <search.h>
 
-#include "regparser.h"
+#include "type.h"
 
 /* 文sentenceを形態素解析する */
 /* TODO: 今は表示するだけだが、単語と品詞のペアを返すようにする */

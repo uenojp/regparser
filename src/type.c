@@ -5,13 +5,13 @@
 char* to_string(PartOfSpeech pos) {
     switch (pos) {
         case START: return "START";
-        case DET:   return "DET";
-        case NOUN:  return "NOUN";
-        case ADJ:   return "ADJ";
-        case PREP:  return "PREP";
-        case ADV:   return "ADV";
-        case VERB:  return "VERB";
-        case END:   return "END";
+        case DET  : return "DET";
+        case NOUN : return "NOUN";
+        case ADJ  : return "ADJ";
+        case PREP : return "PREP";
+        case ADV  : return "ADV";
+        case VERB : return "VERB";
+        case END  : return "END";
         default:    return "UNKNOWN";
     }
 }
