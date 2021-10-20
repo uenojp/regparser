@@ -41,7 +41,7 @@ int parse(const char* sentence) {
             free(copy);
             return 1;
         }
-        printf("(%s, %s)\n", to_string(pos), token);
+        printf("(%s, %s)\n", token, to_string(pos));
     }
 
     free(copy);
